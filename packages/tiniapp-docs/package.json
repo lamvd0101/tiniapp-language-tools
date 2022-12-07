@@ -1,0 +1,22 @@
+{
+  "name": "@tikivn/tiniapp-docs",
+  "version": "1.0.5",
+  "description": "",
+  "author": "tikivn",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tikivn/tiniapp-language-tools.git",
+    "directory": "packages/tiniapp-docs"
+  },
+  "bugs": {
+    "url": "https://github.com/tikivn/tiniapp-language-tools/issues"
+  },
+  "main": "./dist",
+  "scripts": {
+    "prepare": "yarn clean && yarn build",
+    "clean": "rm -rf dist",
+    "build": "tsc -b",
+    "watch": "tsc -b -w",
+    "publish": "yarn clean && yarn build && npm publish"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "scopeName": "source.tiniapp.common",
+  "injectionSelector": "L:text.xml, L:source.css, L:source.js",
+  "patterns": [
+    {
+      "include": "#tiniapp"
+    }
+  ],
+  "repository": {
+    "tiniapp": {
+      "match": "(@)(ti)(ni)(app)",
+      "captures": {
+        "1": {
+          "name": "storage.type.tiniapp"
+        },
+        "2": {
+          "name": "keyword.tiniapp"
+        },
+        "3": {
+          "name": "entity.name.tag.tiniapp"
+        },
+        "4": {
+          "name": "string.tiniapp"
+        }
+      }
+    }
+  }
+}

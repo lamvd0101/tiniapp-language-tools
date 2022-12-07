@@ -1,0 +1,163 @@
+{
+  "name": "tiniapp-vsce",
+  "version": "1.0.5",
+  "description": "Tini App Extension support and debugger for Visual Studio Code",
+  "license": "MIT",
+  "displayName": "Tini App",
+  "publisher": "tiniapp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tikivn/tiniapp-language-tools.git",
+    "directory": "packages/tiniapp-vsce"
+  },
+  "bugs": {
+    "url": "https://github.com/tikivn/tiniapp-language-tools/issues"
+  },
+  "engines": {
+    "vscode": "^1.67.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "icon": "assets/icon.png",
+  "keywords": [
+    "tiniapp",
+    "tini-app",
+    "tiki",
+    "miniprogram"
+  ],
+  "main": "./dist/client/index",
+  "activationEvents": [
+    "onCommand:tiniapp.active",
+    "onLanguage:xml",
+    "onLanguage:css",
+    "onLanguage:typescript",
+    "onLanguage:javascript",
+    "onLanguage:json"
+  ],
+  "contributes": {
+    "typescriptServerPlugins": [
+      {
+        "name": "@tikivn/tiniapp-jsapi-plugin"
+      }
+    ],
+    "commands": [
+      {
+        "command": "tiniapp.active",
+        "title": "Tini App Active!"
+      }
+    ],
+    "languages": [
+      {
+        "id": "txml"
+      },
+      {
+        "id": "xml",
+        "extensions": [
+          ".txml"
+        ],
+        "configuration": "./contributes/configurations/txml.json"
+      },
+      {
+        "id": "css",
+        "extensions": [
+          ".tcss"
+        ],
+        "configuration": "./contributes/configurations/css.json"
+      },
+      {
+        "id": "js",
+        "configuration": "./contributes/configurations/jsapi.json"
+      }
+    ],
+    "grammars": [
+      {
+        "path": "./contributes/syntaxes/txml.tmGrammar.json",
+        "scopeName": "source.txml",
+        "injectTo": [
+          "text.xml"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.txml": "txml"
+        },
+        "tokenTypes": {
+          "meta.embedded.txml": "other"
+        }
+      },
+      {
+        "path": "./contributes/syntaxes/tcss.tmGrammar.json",
+        "scopeName": "source.tcss",
+        "injectTo": [
+          "source.css"
+        ]
+      },
+      {
+        "path": "./contributes/syntaxes/jsapi.tmGrammar.json",
+        "scopeName": "source.jsapi",
+        "injectTo": [
+          "source.js"
+        ]
+      },
+      {
+        "path": "./contributes/syntaxes/common.tmGrammar.json",
+        "scopeName": "source.tiniapp.common",
+        "injectTo": [
+          "text.xml",
+          "source.css",
+          "source.js"
+        ]
+      }
+    ],
+    "snippets": [
+      {
+        "language": "xml",
+        "path": "./contributes/snippets/txml.json"
+      },
+      {
+        "language": "css",
+        "path": "./contributes/snippets/tcss.json"
+      },
+      {
+        "language": "javascript",
+        "path": "./contributes/snippets/jsapi.json"
+      }
+    ],
+    "jsonValidation": [
+      {
+        "fileMatch": "project.config.json",
+        "url": "./node_modules/@tikivn/tiniapp-docs/dist/json/schemas/project.schema.json"
+      },
+      {
+        "fileMatch": "app.json",
+        "url": "./node_modules/@tikivn/tiniapp-docs/dist/json/schemas/app.schema.json"
+      },
+      {
+        "fileMatch": "index.json",
+        "url": "./node_modules/@tikivn/tiniapp-docs/dist/json/schemas/page-component.schema.json"
+      }
+    ]
+  },
+  "scripts": {
+    "prepare": "yarn clean && yarn build",
+    "clean": "rm -rf dist && rm -rf build",
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "prepackage": "webpack --mode production --devtool hidden-source-map",
+    "test": "node ./out/client/__test__/runTest.js",
+    "package": "yarn clean && yarn prepackage && node ./scripts/prepackage.js && yarn vsce package --yarn --out build/ && node ./scripts/postpackage.js",
+    "publish": "yarn vsce publish"
+  },
+  "dependencies": {
+    "@tikivn/tiniapp-docs": "^1.0.5",
+    "@tikivn/tiniapp-jsapi-plugin": "^1.0.5",
+    "js-beautify": "^1.14.4",
+    "vscode-css-languageservice": "^6.0.1",
+    "vscode-languageclient": "^7.0.0",
+    "vscode-languageserver": "^7.0.0",
+    "vscode-languageserver-textdocument": "^1.0.5"
+  },
+  "devDependencies": {
+    "typescript": "*",
+    "vsce": "^2.8.0"
+  }
+}

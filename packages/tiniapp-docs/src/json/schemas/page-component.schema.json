@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "tini-app.page-component.schema",
+  "type": "object",
+  "markdownDescription": "Cấu hình cho page và component.\n\n[Tini App Reference](https://developers.tiki.vn/docs/framework/overview)",
+  "properties": {
+    "component": {
+      "markdownDescription": "Định nghĩa một custom component.",
+      "type": "boolean"
+    },
+    "usingComponents": {
+      "markdownDescription": "Định nghĩa các custom component mà component hiện tại muốn sử dụng. Key là tên của custom component, value là đường dẫn của component. Nếu đường dẫn là đường dẫn tuyệt đối của dự án thì nó cần bắt đầu bằng /, còn nếu không đường dẫn sẽ là đường dẫn tương đối.",
+      "type": "object",
+      "patternProperties": {
+        "(.*?)": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(.+)/([^/]+)$"
+        }
+      }
+    }
+  },
+  "if": {
+    "properties": {
+      "component": {
+        "const": false
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "defaultTitle": {
+        "markdownDescription": "Title mặc định của page.",
+        "type": "string",
+        "default": ""
+      },
+      "pullRefresh": {
+        "markdownDescription": "Xác định xem có cho phép pull down để refresh hay không.\n\n`Lưu ý: cấu hình này chỉ có ý nghĩa khi allowsBounceVertical=YES`.",
+        "enum": ["YES", "NO"],
+        "default": "NO"
+      },
+      "allowsBounceVertical": {
+        "markdownDescription": "Xác định cho phép kéo màn hình vượt quá size của window hay không.",
+        "enum": ["YES", "NO"],
+        "default": "NO"
+      },
+      "transparentTitle": {
+        "markdownDescription": "Cấu hình thuộc tính trong suốt của navigation bar. Hỗ trợ 3 giá trị:\n\n- `none` - Có màu\n\n- `always` - Trong suốt\n\n- `auto` - Sẽ tự động chuyển giữa trong suốt và có màu tuỳ theo vị trí scroll trên màn hình.",
+        "enum": ["none", "always", "auto"],
+        "default": "none"
+      },
+      "titleBarColor": {
+        "markdownDescription": "Quy định màu nền của navigation bar.",
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^#[0-9a-fA-F]{6}$",
+        "default": "#FFFFFF"
+      },
+      "backgroundColor": {
+        "markdownDescription": "Quy định màu nền mặc định của page.",
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^#[0-9a-fA-F]{6}$",
+        "default": "#FFFFFF"
+      },
+      "titleBarBottomColor": {
+        "markdownDescription": "Quy định màu cho border bottom của navigation nar.",
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^#[0-9a-fA-F]{6}$",
+        "default": "#EBEBF0"
+      },
+      "disableHardwareBack": {
+        "markdownDescription": "Xác định cho phép vuốt để quay lại trang trước đó hay không.",
+        "enum": ["YES", "NO"],
+        "default": "YES"
+      },
+      "hideOptionMenuButton": {
+        "markdownDescription": "Xác định việc có ẩn đi button Option Menu hay không. Tuỳ chọn này chỉ hỗ trợ cho các ứng dụng được phát triển bởi Tiki.",
+        "enum": ["YES", "NO"],
+        "default": "YES"
+      }
+    },
+    "dependentRequired": {
+      "pullRefresh": ["allowsBounceVertical"]
+    },
+    "if": {
+      "properties": {
+        "pullRefresh": {
+          "const": "NO"
+        }
+      }
+    },
+    "else": {
+      "properties": {
+        "allowsBounceVertical": {
+          "markdownDescription": "Xác định cho phép kéo màn hình vượt quá size của window hay không.\n\n`pullRefresh=YES chỉ có hiệu lực khi allowsBounceVertical=YES`",
+          "const": "YES"
+        }
+      }
+    }
+  },
+  "else": {
+    "dependentRequired": {
+      "componentLifeCycleV2": ["component"]
+    },
+    "properties": {
+      "componentLifeCycleV2": {
+        "markdownDescription": "Sử dụng component life cycle v2.",
+        "enum": ["YES", "NO"],
+        "default": "YES"
+      }
+    }
+  }
+}

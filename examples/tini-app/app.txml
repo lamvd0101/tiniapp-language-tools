@@ -1,0 +1,9 @@
+<!-- TXML template -->
+<view class="block-content">
+  <view class="block-content-title">
+    {{{var test = '123';}}}
+  </view>
+  <view class="block-content-title">{{false ? 'Test' : 'Test'}}</view>
+  <view class="block-content-description">{{description}}</view>
+  <view class="block-content-description">{{arr[0]}}</view>
+</view>

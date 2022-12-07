@@ -1,0 +1,184 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "tini-app.app.schema",
+  "type": "object",
+  "markdownDescription": "Cấu hình cho ứng dụng Tini App.\n\n[Tini App Reference](https://developers.tiki.vn/docs/framework/app/config)",
+  "required": ["pages"],
+  "properties": {
+    "pages": {
+      "markdownDescription": "Đường dẫn tương đối tới các pages.",
+      "type": "array",
+      "default": ["/pages/index/index"],
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(.+)/([^/]+)$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "window": {
+      "markdownDescription": "Cấu hình hành vi của window chứa page.",
+      "type": "object",
+      "properties": {
+        "defaultTitle": {
+          "markdownDescription": "Title mặc định của page.",
+          "type": "string",
+          "default": ""
+        },
+        "pullRefresh": {
+          "markdownDescription": "Xác định xem có cho phép pull down để refresh hay không.\n\n`Lưu ý: cấu hình này chỉ có ý nghĩa khi allowsBounceVertical=YES`.",
+          "enum": ["YES", "NO"],
+          "default": "NO"
+        },
+        "allowsBounceVertical": {
+          "markdownDescription": "Xác định cho phép kéo màn hình vượt quá size của window hay không.",
+          "enum": ["YES", "NO"],
+          "default": "NO"
+        },
+        "transparentTitle": {
+          "markdownDescription": "Cấu hình thuộc tính trong suốt của navigation bar. Hỗ trợ 3 giá trị:\n\n- `none` - Có màu\n\n- `always` - Trong suốt\n\n- `auto` - Sẽ tự động chuyển giữa trong suốt và có màu tuỳ theo vị trí scroll trên màn hình.",
+          "enum": ["none", "always", "auto"],
+          "default": "none"
+        },
+        "titleBarColor": {
+          "markdownDescription": "Quy định màu nền của navigation bar.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "default": "#FFFFFF"
+        },
+        "backgroundColor": {
+          "markdownDescription": "Quy định màu nền mặc định của page.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "default": "#FFFFFF"
+        },
+        "titleBarBottomColor": {
+          "markdownDescription": "Quy định màu cho border bottom của navigation nar.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "default": "#EBEBF0"
+        },
+        "disableHardwareBack": {
+          "markdownDescription": "Xác định cho phép vuốt để quay lại trang trước đó hay không.",
+          "enum": ["YES", "NO"],
+          "default": "YES"
+        },
+        "enableCache": {
+          "markdownDescription": "Bật cache.",
+          "type": "string",
+          "minLength": 1,
+          "enum": ["YES", "NO"],
+          "default": "YES"
+        }
+      },
+      "dependentRequired": {
+        "pullRefresh": ["allowsBounceVertical"]
+      },
+      "if": {
+        "properties": {
+          "pullRefresh": {
+            "const": "NO"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "allowsBounceVertical": {
+            "markdownDescription": "Xác định cho phép kéo màn hình vượt quá size của window hay không.\n\n`pullRefresh=YES chỉ có hiệu lực khi allowsBounceVertical=YES`",
+            "const": "YES"
+          }
+        }
+      }
+    },
+    "tabBar": {
+      "markdownDescription": "Quy định cách hiển thị cũng như hành vi của tab bar.",
+      "type": "object",
+      "required": ["items"],
+      "properties": {
+        "textColor": {
+          "markdownDescription": "Màu sắc của text trong tab bar item.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "default": "#000000"
+        },
+        "selectedColor": {
+          "markdownDescription": "Màu sắc của text trong tab bar item khi được lựa chọn.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "default": "#000000"
+        },
+        "backgroundColor": {
+          "markdownDescription": "Màu nền của tab bar.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "default": "#FFFFFF"
+        },
+        "borderTopActiveColor": {
+          "markdownDescription": "Màu border top của tab bar đối với tab được chọn.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "default": "#EBEBF0"
+        },
+        "borderTopColor": {
+          "markdownDescription": "Màu border top của tab bar.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "default": "#EBEBF0"
+        },
+        "items": {
+          "markdownDescription": "Cấu hình từng item trong tab bar.",
+          "type": "array",
+          "minItems": 1,
+          "default": [
+            {
+              "activeIcon": "examples/assets/icon-1-active.png",
+              "name": "Home Page",
+              "icon": "examples/assets/icon-1.png",
+              "pagePath": "pages/home/index"
+            }
+          ],
+          "items": {
+            "type": "object",
+            "required": ["pagePath", "name"],
+            "properties": {
+              "pagePath": {
+                "markdownDescription": "Đường dẫn tới page.",
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(.+)/([^/]+)$"
+              },
+              "name": {
+                "markdownDescription": "Tên hiển thị của item.",
+                "type": "string",
+                "minLength": 1
+              },
+              "icon": {
+                "markdownDescription": "Đường dẫn tới icon khi item chưa được chọn.",
+                "type": ["string", "null"],
+                "minLength": 1,
+                "pattern": "^(.+)/([^/]+)$",
+                "default": null
+              },
+              "activeIcon": {
+                "markdownDescription": "Đường dẫn tới icon khi item được chọn.",
+                "type": ["string", "null"],
+                "minLength": 1,
+                "pattern": "^(.+)/([^/]+)$",
+                "default": null
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

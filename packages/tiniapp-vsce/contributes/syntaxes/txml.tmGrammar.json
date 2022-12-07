@@ -1,0 +1,31 @@
+{
+  "scopeName": "source.txml",
+  "injectionSelector": "L:text.xml",
+  "patterns": [
+    {
+      "include": "#tiniapp-interpolation"
+    }
+  ],
+  "repository": {
+    "tiniapp-interpolation": {
+      "name": "meta.embedded.txml",
+      "begin": "\\{\\{\\{?",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.generic.begin.txml"
+        }
+      },
+      "end": "\\}\\}\\}?",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.generic.end.txml"
+        }
+      },
+      "patterns": [
+        {
+          "include": "source.js#expression"
+        }
+      ]
+    }
+  }
+}

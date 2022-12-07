@@ -1,0 +1,32 @@
+{
+  "name": "@tikivn/tiniapp-jsapi-plugin",
+  "version": "1.0.5",
+  "description": "Tini App JSApi Plugin is a typescript server plugin that adds intellisense to Tini App JSApi.",
+  "license": "MIT",
+  "keywords": [
+    "tiki",
+    "tiniapp",
+    "miniapp",
+    "miniprogram"
+  ],
+  "author": "tikivn",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tikivn/tiniapp-language-tools.git",
+    "directory": "packages/tiniapp-jsapi-plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/tikivn/tiniapp-language-tools/issues"
+  },
+  "main": "./dist",
+  "scripts": {
+    "prepare": "yarn clean && yarn build",
+    "clean": "rm -rf dist && rm -rf out",
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "publish": "yarn clean && yarn build && npm publish"
+  },
+  "devDependencies": {
+    "typescript": "*"
+  }
+}

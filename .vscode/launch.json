@@ -1,0 +1,52 @@
+// A launch configuration that compiles the extension and then opens it inside a new window
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "extensionHost",
+      "request": "launch",
+      "name": "Launch Client",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceRoot}/packages/tiniapp-vsce"
+      ],
+      "outFiles": [
+        "${workspaceRoot}/packages/tiniapp-vsce/dist/client/**/*.js"
+      ],
+      "preLaunchTask": {
+        "type": "npm",
+        "script": "watch"
+      }
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach to Server",
+      "port": 6009,
+      "restart": true,
+      "outFiles": [
+        "${workspaceRoot}/packages/tiniapp-vsce/dist/server/**/*.js"
+      ]
+    },
+    {
+      "name": "Language Server E2E Test",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceRoot}/packages/tiniapp-vsce",
+        "--extensionTestsPath=${workspaceRoot}/packages/tiniapp-vsce/out/client/__test__/index",
+        "${workspaceRoot}/packages/tiniapp-vsce/client/testFixture"
+      ],
+      "outFiles": [
+        "${workspaceRoot}/packages/tiniapp-vsce/out/client/__test__/**/*.js"
+      ]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Client + Server",
+      "configurations": ["Launch Client", "Attach to Server"]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "Tini App": {
+    "prefix": "@tiniapp",
+    "body": ["/* @tiniapp: $1 */"],
+    "description": "Tini App block comment"
+  }
+}

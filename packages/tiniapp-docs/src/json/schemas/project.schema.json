@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "tini-app.project.schema",
+  "type": "object",
+  "markdownDescription": "Cấu hình cho dự án Tini App.\n\n[Tini App Reference](https://developers.tiki.vn/docs/development/studio/project-config)",
+  "required": ["miniprogramRoot"],
+  "properties": {
+    "miniprogramRoot": {
+      "markdownDescription": "Đường dẫn tới thư mục chứa file `app.json`",
+      "type": "string",
+      "default": "src"
+    },
+    "setting": {
+      "type": "object",
+      "properties": {
+        "useCompilerPlugins": {
+          "markdownDescription": "Lựa chọn compiler cho dự án.\n\n[Tini App Reference](https://developers.tiki.vn/docs/development/studio/typescript-support)",
+          "type": "array",
+          "default": ["javascript"],
+          "items": {
+            "type": "string",
+            "enum": ["javascript", "typescript"]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}
